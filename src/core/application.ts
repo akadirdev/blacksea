@@ -1,5 +1,6 @@
 import express, { Express } from "express";
 import http from "http";
+import { banner, Logger } from "./logging";
 
 export interface ApplicationConfig {
   host?: string;
@@ -13,12 +14,18 @@ export class Application {
   protected httpServer: http.Server;
   public configs: ApplicationConfig;
 
+  public logger: Logger;
+
   constructor(config?: ApplicationConfig) {
+    this.logger = new Logger("Application");
+    console.log(banner);
+
     this.initConfig(config);
     this.initServer();
   }
 
   private initConfig(config?: ApplicationConfig): void {
+    this.logger.debug(`Initialize configurations`);
     this.configs = {
       host: config?.host ?? "localhost",
       port: config?.port ?? 3000,
@@ -32,11 +39,12 @@ export class Application {
 
   private initServer(): void {
     this.app = express();
-
+    this.logger.debug(`Http Server initializing..`);
     this.httpServer = http.createServer(this.app);
   }
 
   public async start(): Promise<void> {
+    this.logger.debug(`Server starting..`);
     this.httpServer.listen(this.configs.port);
   }
 
