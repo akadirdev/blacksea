@@ -36,8 +36,6 @@ export class Application {
     this.httpServer = http.createServer(this.app);
   }
 
-  public async boot(): Promise<void> {}
-
   public async start(): Promise<void> {
     this.httpServer.listen(this.configs.port);
   }
