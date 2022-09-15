@@ -1,5 +1,6 @@
 import express, { Express } from "express";
 import http from "http";
+import { Context } from "./context";
 import { banner, Logger } from "./logging";
 
 export interface ApplicationConfig {
@@ -13,6 +14,8 @@ export class Application {
   protected app: Express;
   protected httpServer: http.Server;
   public configs: ApplicationConfig;
+
+  private context: Context;
 
   public logger: Logger;
 
