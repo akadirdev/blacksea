@@ -2,15 +2,13 @@ import "reflect-metadata";
 import { BindingScope } from "../context";
 import { ClassDefinition, ClassType } from "../definitions/class.definition";
 
-export const service = (
-  bindingScope: BindingScope = BindingScope.TRANSIENT
-) => {
+export const controller = () => {
   return (target: Function) => {
     const classDef = {
-      bindingScope: bindingScope,
-      classType: ClassType.SERVICE,
+      bindingScope: BindingScope.REQUEST,
+      classType: ClassType.CONTROLLER,
     } as ClassDefinition;
 
-    Reflect.defineMetadata("meta:service", classDef, target);
+    Reflect.defineMetadata("meta:controller", classDef, target);
   };
 };
